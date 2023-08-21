@@ -69,8 +69,8 @@ class DocumentController extends Controller
     public function update(DocumentRequest $request, int $id)
     {
         try {
-            $model = $this->repository->byId($id);
-            
+            $model = $this->repository->update($request->only(['name', 'type_id']), $id);
+
             if ($request->has('content')) {
                 $data = [];
 
@@ -97,9 +97,7 @@ class DocumentController extends Controller
     public function destroy(int $id)
     {
         try {
-            $model = $this->repository->byId($id);
-            $model->columns->detach();
-            $model->delete();
+            $this->repository->delete($id, 'columns');
             return response()->json([
                 'data' => [],
             ], Response::HTTP_NO_CONTENT);

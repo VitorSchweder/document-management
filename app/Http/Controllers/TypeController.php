@@ -60,8 +60,7 @@ class TypeController extends Controller
     public function update(TypeRequest $request, int $id)
     {
         try {
-            $model = $this->repository->byId($id);
-            $model->fill($request->only(['name']))->update();
+            $model = $this->repository->update($request->only(['name']), $id);
             return response()->json([
                 'data' => new TypeResource($model),
             ], Response::HTTP_OK);
@@ -76,8 +75,8 @@ class TypeController extends Controller
     public function destroy(int $id)
     {
         try {
-            $model = $this->repository->byId($id);
-            $model->delete();
+            $this->repository->delete($id);
+
             return response()->json([
                 'data' => [],
             ], Response::HTTP_NO_CONTENT);

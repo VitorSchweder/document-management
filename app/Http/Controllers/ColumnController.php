@@ -51,7 +51,7 @@ class ColumnController extends Controller
             ], Response::HTTP_OK);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => 'Data not found'], Response::HTTP_NOT_FOUND);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             log::error('An error occurred while showing data: '. $exception);
             return response()->json(['error' => 'An error occurred while showing data'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -60,14 +60,13 @@ class ColumnController extends Controller
     public function update(ColumnRequest $request, int $id)
     {
         try {
-            $model = $this->repository->byId($id);
-            $model->fill($request->only(['name', 'type_id']))->update();
+            $model = $this->repository->update($request->only(['name', 'type_id']), $id);
             return response()->json([
                 'data' => new ColumnResource($model),
             ], Response::HTTP_OK);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => 'Data not found'], Response::HTTP_NOT_FOUND);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             log::error('An error occurred while updating data: '. $exception);
             return response()->json(['error' => 'An error occurred while updating data'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -76,14 +75,13 @@ class ColumnController extends Controller
     public function destroy(int $id)
     {
         try {
-            $model = $this->repository->byId($id);
-            $model->delete();
+            $this->repository->delete($id);
             return response()->json([
                 'data' => [],
             ], Response::HTTP_NO_CONTENT);
         } catch (ModelNotFoundException $exception) {
             return response()->json(['error' => 'Data not found'], Response::HTTP_NOT_FOUND);
-        } catch (Exception $exception){
+        } catch (Exception $exception) {
             log::error('An error occurred while deleting data: '. $exception);
             return response()->json(['error' => 'An error occurred while deleting data'], Response::HTTP_INTERNAL_SERVER_ERROR);
         }

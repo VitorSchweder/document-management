@@ -20,16 +20,21 @@ class BaseRepository
         return $this->model::create($data);
     }
 
-    public function delete($id)
+    public function delete($id, $relation = null)
     {
         $model = $this->model::findOrFail($id);
+        
+        if ($relation) {
+            $model->$relation()->detach();
+        }
+
         return $model->delete();
     }
 
     public function update($data, $id)
     {
         $model = $this->model::findOrFail($id);
-        $model->fill($data)->save();
+        $model->fill($data)->update();
 
         return $model;
     }
