@@ -1,4 +1,4 @@
-# API for manage PDF documents
+# API to manage PDF documents
 
 ## Instalation
 git clone;
