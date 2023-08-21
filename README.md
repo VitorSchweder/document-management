@@ -1,11 +1,11 @@
 # API to manage PDF documents
 
 ## Instalation
-git clone;
-composer install;
-cp .env.example .env;
-php artisan key:generate;
-php artisan migrate;
+- git clone;
+- composer install;
+- cp .env.example .env;
+- php artisan key:generate;
+- php artisan migrate;
 
 ## Main End-points
 - Create Document Type: POST /api/types;
